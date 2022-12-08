@@ -1,31 +1,29 @@
-import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+// import React, { useState, useEffect } from 'react';
 
-export const Lists = () => {
-    const [userData, setUserData] = useState("");
+export const Lists = ({ fetchUsersData, userData, user }) => {
+
+    // const [userData, setUserData] = useState("");
 
     const fetchData = async () => {
-        const res = await axios.get("/getusers");
+        const res = await axios.get("http://localhost:4000/getusers")
+            .then(res => res.json())
+            .then(setUserData => res.data.name)
         console.log(res)
-        console.log("krishna");
-
-        if (res.data.users.length > 0) {
-            setUserData(res.data.users);
-        }
+        fetchUsersData();
     };
 
-    useEffect(() => {
-        fetchData();
-    }, []);
 
+    useEffect(() => {
+        fechData();
+    }, [])
 
     return (
         <>
             <h3>List of all Names and Emails</h3>
-            {/* Here i want to show  all backend data */}
             {userData &&
                 userData.map((user) => {
-                    <h3>`My name is ${ user.name } and my email is ${ user.email }`</h3>
+                    <h3 key={user._id}>`My name is ${user.name} and my email is ${user.email}`</h3>
                     console.log(user);
                 })};
         </>
