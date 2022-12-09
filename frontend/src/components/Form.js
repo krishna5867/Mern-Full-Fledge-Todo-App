@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from "axios";
 
+
 export const Form = ({ fetchUsersData }) => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -37,6 +38,9 @@ export const Form = ({ fetchUsersData }) => {
             alert("Data Submitted Successfully")
         }, 100);
     };
+
+
+
     return (
         <div>
             <form onSubmit={handleSubmit}>
@@ -65,6 +69,10 @@ export const Form = ({ fetchUsersData }) => {
                     type="Submit"
                 >Submit</button>
             </form>
+
+            <div>
+            {/* <Lists /> */}
+            </div>
         </div>
     )
 };
