@@ -50,7 +50,7 @@ exports.login = async (req, res) => {
   try {
     const { email, password } = req.body
     if (!(email && password)) {
-      return res.status(400).send("Email and Password is required for login")
+      return res.status(400).send("Incorrect Password")
     }
 
     const user = await User.findOne({ email });
