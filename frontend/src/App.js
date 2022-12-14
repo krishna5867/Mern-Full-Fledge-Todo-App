@@ -1,5 +1,5 @@
 // import './App.css';
-import { Form } from "./components/Form";
+import { SignupForm } from "./components/SignupForm";
 import { Lists } from "./components/Lists";
 import { LoginForm } from './components/LoginForm';
 
@@ -7,7 +7,7 @@ function App() {
 
   return (
     <div>
-      <Form />
+      <SignupForm />
       <Lists />
       <LoginForm />
 

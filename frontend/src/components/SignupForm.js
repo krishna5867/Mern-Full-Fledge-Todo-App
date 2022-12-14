@@ -7,7 +7,7 @@ import { Row, Col, Button, Input, Container } from "reactstrap";
 
 
 
-export const Form = ({ fetchUsersData }) => {
+export const SignupForm = ({ fetchUsersData }) => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
