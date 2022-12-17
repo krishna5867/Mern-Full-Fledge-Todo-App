@@ -6,15 +6,22 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Row, Col, Button, Input, Container } from "reactstrap";
 
-export const LoginForm = () => {
+const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
+    const navigate = useNavigate();
+
     const submitData = async () => {
         try {
-            const res = await axios.post("http://localhost:4000/login");
+            const res = await axios.post("http://localhost:4000/login", {
+                email, password
+            });
             if (res.data.success) {
+                navigate("/todo");
                 console.log("Login successfully");
+            } else {
+                alert("Login Failed");
             }
         } catch (error) {
             console.log(error);
@@ -28,22 +35,25 @@ export const LoginForm = () => {
         setPassword("");
         toast.success("login Successfully", {
         }, 300);
+        setTimeout(()=>{
+        navigate("/todo");
+        },1000)
     };
 
     return (
         <>
-            <div className="text-center border border-bottom-secondary">
+            <div className="text-center align-center mx-auto my-5  border border-2 border-warning" style={{ width: "23rem" }}>
                 <ToastContainer
                     position="top-right"
                     autoClose={1000} />
-                <Container style={{ width: "17rem" }}>
+                <Container style={{ width: "17rem" }} className="mt-4 mb-4">
                     <Row>
                         <Col className="todoapp container-fluid">
-                            <h3 className="my-3">LogIn</h3>
+                            <h3 className="mb-4">LogIn</h3>
                             <div className="d-flex container fluid w-100">
                                 <form onSubmit={handleLogin}>
                                     <Input
-                                        className="mx-auto"
+                                        className="mx-auto mt-4"
                                         type="text"
                                         placeholder="Email"
                                         value={email}
@@ -56,7 +66,7 @@ export const LoginForm = () => {
                                         value={password}
                                         onChange={(event) => setPassword(event.target.value)}
                                     />
-                                    <Button className="btn-warning btn-sm m-3"
+                                    <Button className="btn btn-2lg btn-warning  mt-4"
                                     >SignIn</Button>
                                 </form>
                             </div>
@@ -67,3 +77,5 @@ export const LoginForm = () => {
         </>
     )
 };
+
+export default Login;
