@@ -52,17 +52,20 @@ const TodoList = () => {
 
   return (
     <>
-      <Container  style={{ width: "78rem" }}>
+      <Container>
         <Card className="border border-2 border-warning">
           {/* <CardBody> */}
-          <div className="d-flex mb-4 mt-2">
-            <div style={{ width: "16rem" }} className="mx-auto">
+          <div className="d-flex justify-content-around mb-4 mt-2">
+          <div style={{ width: "25rem" }} className="mx-5">
+              <h3>Completed</h3>
+            </div>
+            <div style={{ width: "25rem" }}>
               <h3>Title</h3>
             </div>
-            <div style={{ width: "35rem" }}>
+            <div style={{ width: "25rem" }}>
               <h3>Task</h3>
             </div>
-            <div style={{ width: "15rem" }}>
+            <div style={{ width: "25rem" }}>
               <h3>Status</h3>
             </div>
           </div>
@@ -71,17 +74,17 @@ const TodoList = () => {
       </Container>
       { todo && todo.length > 0 ? (
         todo.map((todo) => (
-          <Container key={todo._id}  style={{ width: "78rem" }}>
+          <Container key={todo._id}>
             <Card className="border border-2 border-warning mt-1">
               {/* <CardBody> */}
-              <div className="d-flex mt-2" key={todo._id}>
-              <div className="mx-auto my-auto" style={{ width: "8rem" }}>
-              <input class="form-check-input mx-4" type="checkbox" value="" id="flexCheckChecked" />
+              <div className="d-flex justify-content-around mt-2" key={todo._id}>
+              <div style={{ width: "25rem" }} className="mx-5">
+              <input class="form-check-input mx-4" type="checkbox" id="flexCheckChecked" />
                 </div>
-                <div style={{ width: "30rem" }} className="mt-2">
+                <div className="mt-2" style={{ width: "25rem" }}>
                   <h4>{todo.title}</h4>
                 </div>
-                <div style={{ width: "50rem" }} className="mt-2">
+                <div  className="mt-2" style={{ width: "25rem" }}>
                   <h4>{todo.tasks}</h4>
                 </div>
                 <div style={{ width: "25rem" }}>

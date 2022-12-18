@@ -25,7 +25,6 @@ const Signup = () => {
 
             if (res.data.success) {
                 console.log("User created successfully");
-                // fetchUsersData();
             }
         } catch (error) {
             console.log(error);

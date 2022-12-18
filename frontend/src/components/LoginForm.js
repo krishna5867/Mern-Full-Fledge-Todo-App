@@ -18,12 +18,19 @@ const Login = () => {
                 email, password
             });
             if (res.data.success) {
-                navigate("/todo");
+            setTimeout(()=>{
+            navigate("/todo");
+            },1000)
+            toast.success("login Successfully", {
+            }, 300);
+            setEmail("");
+            setPassword("");
                 console.log("Login successfully");
             } else {
                 alert("Login Failed");
             }
         } catch (error) {
+            alert("User Credencial wrong");
             console.log(error);
             console.log(error.response.data.message);
         }
@@ -31,18 +38,12 @@ const Login = () => {
     const handleLogin = (e) => {
         e.preventDefault();
         submitData();
-        setEmail("");
-        setPassword("");
-        toast.success("login Successfully", {
-        }, 300);
-        setTimeout(()=>{
-        navigate("/todo");
-        },1000)
+       
     };
 
     return (
         <>
-            <div className="text-center align-center mx-auto my-5  border border-2 border-warning" style={{ width: "23rem" }}>
+            <div className="text-center align-center mx-auto  border border-2 border-warning my-5" style={{ width: "23rem" }}>
                 <ToastContainer
                     position="top-right"
                     autoClose={1000} />

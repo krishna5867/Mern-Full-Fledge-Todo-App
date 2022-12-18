@@ -1,10 +1,12 @@
-import React from 'react'
+import React from "react";
+
 import { Link } from 'react-router-dom';
 
 const Navbar = () => {
+
     return (
         <div> 
-            <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+            <nav className="navbar navbar-expand-lg navbar-dark bg-dark ">
                 <div className="container-fluid">
                     <Link className="navbar-brand" to="/todo">TodoApp</Link>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -25,7 +27,7 @@ const Navbar = () => {
                         </ul>
                         <div className="d-flex justify-content-between">
                             {/* <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" /> */}
-                            <h5 className='text-white mx-sm-3 mt-2'>krishna@gmail.com</h5>
+                            <h5 className='text-white mx-sm-3 mt-2'>krishnaKmr968@gmail.com</h5>
                                 <button className="btn btn-warning">SignOut</button>
                         </div>
                     </div>

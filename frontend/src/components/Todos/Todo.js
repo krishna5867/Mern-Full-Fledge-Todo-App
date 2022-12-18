@@ -40,13 +40,13 @@ const Todo = () => {
   };
 
   return (
-    <div>
-      <Container className="mt-4 " style={{ width: "78rem" }}>
-        <Card className="border border-2 border-warning mb-2">
+    <div className="pt-4">
+      <Container className="m">
+        <Card className="border border-2 border-warning mb-2 my-5">
           <CardBody>
             <Container className="mb-4">
               <form onSubmit={handleSubmit}>
-                <h3 className="mt-2"><b> Todo App</b></h3>
+                <h3 className="mt-3 text-center"><b> Todo App</b></h3>
                 <CardBody className="mt-2 d-flex">
                   <Input
                     type="text"
