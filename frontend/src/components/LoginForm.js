@@ -19,7 +19,7 @@ const Login = () => {
             });
             if (res.data.success) {
             setTimeout(()=>{
-            navigate("/todo");
+            navigate("/dashboard");
             },1000)
             toast.success("login Successfully", {
             }, 300);
@@ -30,7 +30,7 @@ const Login = () => {
                 alert("Login Failed");
             }
         } catch (error) {
-            alert("User Credencial wrong");
+            alert("Invalid User Details");
             console.log(error);
             console.log(error.response.data.message);
         }

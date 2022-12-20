@@ -24,9 +24,8 @@ function App() {
     <Route path="/dashboard" element={<Dashboard />} />
     <Route path="/signup" element={<SignupForm />} />
     <Route path="/login" element={<LoginForm />} />
-    <Route path="/todo" element={<Todo />} />
+    {/* <Route path="/todo" element={<Todo />} /> */}
     <Route path="/BackendDataList" element={<BackendDataList />} />
-
     </Routes>
 
 

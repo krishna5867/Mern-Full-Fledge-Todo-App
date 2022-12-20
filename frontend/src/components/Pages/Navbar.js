@@ -1,14 +1,20 @@
 import React from "react";
+import axios from "axios";
 
 import { Link } from 'react-router-dom';
 
 const Navbar = () => {
 
+    const Logout = async () => {
+        const res = await axios.get("/logout");
+        console.log(res);
+    }
+
     return (
         <div> 
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark ">
                 <div className="container-fluid">
-                    <Link className="navbar-brand" to="/todo">TodoApp</Link>
+                    <Link className="navbar-brand" to="/dashboard">TodoApp</Link>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
@@ -28,7 +34,7 @@ const Navbar = () => {
                         <div className="d-flex justify-content-between">
                             {/* <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" /> */}
                             <h5 className='text-white mx-sm-3 mt-2'>krishnaKmr968@gmail.com</h5>
-                                <button className="btn btn-warning">SignOut</button>
+                                <button className="btn btn-warning" onClick={(Logout)}>SignOut</button>
                         </div>
                     </div>
                 </div>

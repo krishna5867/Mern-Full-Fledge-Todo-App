@@ -6,7 +6,6 @@ const Dashboard = () => {
     return (
         <div>
             <Todo />
-            <h2>dashboard</h2>
         </div>
     )
 }

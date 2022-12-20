@@ -1,22 +1,26 @@
 const Todo = require("../models/todoModel");
+const User = require("../models/userModel");
+
 
 exports.home = (req, res) => {
     res.send("Hello Todo");
+    res.send(User)
+
 }
 
 exports.getTodos = async (req, res)=>{
     try{
-        // const todos = await Todo.find({user:req.user.user_id});
-        const todos = await Todo.find();
-        res.status(200).json({
+        const todos = await Todo.find({user:req.user.user_id});
+        // const todos = await Todo.find();
+        return res.status(200).json({
             success: true,
-            message: "successfully retrieved121",
+            message: "successfully retrieved",
             todos,
         })        
     }
 
     catch(err){
-        res.status(401).json({
+        return res.status(401).json({
             success: false,
             message: err.message,
         })
@@ -25,11 +29,10 @@ exports.getTodos = async (req, res)=>{
 
 exports.createTodo = async (req, res) => {
     try {
-        // const user = req.user;
-        // // console.log(user)
-        // if(!user)
-        //     throw new Error("user not found and you are not allowed");
-            
+        const user = req.user;
+        // return res.send(user)
+        if(!user)
+            throw new Error("user not found");
 
         const { title, tasks } = req.body;
 
@@ -46,13 +49,11 @@ exports.createTodo = async (req, res) => {
         const todo = await Todo.create({
             title,
             tasks,
-            // user:user.user_id
         });
-        // const saveTodo = await todo.save();
-        res.status(201).json({
+        return res.status(201).json({
             success: true,
             message: "Todo Created Successfully",
-            todo
+            todo,
         });
     } catch (error) {
         console.log(error);

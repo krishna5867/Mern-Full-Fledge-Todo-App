@@ -1,7 +1,6 @@
 const User = require("../models/userModel");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-var cookieParser = require('cookie-parser')
 
 
 exports.home = (req, res) => {
@@ -34,8 +33,8 @@ exports.createUser = async (req, res) => {
       process.env.SECRET_KEY,
       { expiresIn: '2h' }
     );
-    console.log(token);
-    user.token = token 
+    console.log(`Registered token- ${token}`);
+    user.token = token
     await user.save();
 
     user.password = undefined
@@ -71,7 +70,7 @@ exports.login = async (req, res) => {
       user.token = token;
       await user.save();
       user.password = undefined;
-      // res.status(201).json(user);
+      console.log(`Login token- ${token}`);
 
       // Cookie
       const options = {
@@ -91,6 +90,17 @@ exports.login = async (req, res) => {
     console.log("login error");
   }
 };
+
+exports.logout = async (req, res) => {
+  try {
+    res.clearCookie('jwt');
+    res.send('logout');
+    console.log("Logout successfull");
+  } catch (error) {
+    res.send(error);
+    console.log("Logout failed");
+  }
+}
 
 exports.getUsers = async (req, res) => {
   try {
@@ -124,6 +134,7 @@ exports.editUser = async (req, res) => {
     });
   }
 };
+
 
 exports.deleteUser = async (req, res) => {
   try {
