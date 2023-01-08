@@ -6,7 +6,6 @@ import SignupForm  from "./components/SignupForm";
 import LoginForm  from './components/LoginForm';
 import Navbar from "./components/Pages/Navbar";
 import { Routes, Route} from "react-router-dom";
-import Todo from "./components/Todos/Todo";
 import BackendDataList from "./components/BackendDataLists";
 import Signup from "./components/SignupForm";
 
