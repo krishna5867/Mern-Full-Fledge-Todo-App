@@ -22,7 +22,7 @@ const TodoList = ({handleSearch}) => {
 
   useEffect(() => {
     fetchTodosData(page);
-  }, [todo]);
+  }, [todo, page]);
 
 
   const handleEdit = async (todo) => {
