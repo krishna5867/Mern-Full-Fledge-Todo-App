@@ -127,10 +127,10 @@ const TodoList = ({handleSearch}) => {
           <nav aria-label="..." className="d-flex justify-content-end fixed-bottom mx-5">
             <ul className="pagination">
               <li className="page-item">
-                <a className="page-link" href="#" onClick={() => setPage(page - 1)}>Previous</a>
+                <btn className="page-link btn" onClick={() => setPage(page - 1)}>Previous</btn>
               </li>
               <li className="page-item">
-                <a className="page-link" href="#" onClick={() => setPage(page + 1)}>Next</a>
+                <btn className="page-link btn" onClick={() => setPage(page + 1)}>Next</btn>
               </li>
             </ul>
           </nav>
