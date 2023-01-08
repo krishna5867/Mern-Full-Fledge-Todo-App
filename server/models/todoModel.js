@@ -3,12 +3,12 @@ const mongoose = require("mongoose");
 const todoSchema = new mongoose.Schema({
     title: String,
     tasks: String,
-    user: {
+    userId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'user',
-        required: true,
+        ref: 'User',
+        // required: true,
     },
-    taskCompleted: {
+    isCompleted: {
         type: Boolean,
         default: false,
     },

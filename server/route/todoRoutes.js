@@ -1,6 +1,5 @@
 const express = require("express");
-const auth = require('../middleware/auth');
-
+const isLogged = require('../middleware/isLogged');
 
 const {
     home,
@@ -8,17 +7,20 @@ const {
     getTodos,
     editTodo,
     deleteTodo,
-    taskCompleted
+    isCompleted,
+    // searchTodo
 } = require("../controllers/todoController");
 
 const router = express.Router();
 
 router.get("/", home);
-router.post("/createTodo", auth, createTodo);
-router.get("/getTodos", auth, getTodos);
+router.post("/createTodo", createTodo);
+router.get("/getTodos", getTodos);
 router.put("/editTodo/:id", editTodo);
 router.delete("/deleteTodo/:id", deleteTodo);
-router.put("/taskCompleted/:id", taskCompleted);
+router.put("/isCompleted/:id", isCompleted);
+// router.get("/searchTodo/:id", searchTodo);
+
 
 
 module.exports = router;

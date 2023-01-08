@@ -43,31 +43,31 @@ const Login = () => {
 
     return (
         <>
-            <div className="text-center align-center mx-auto  border border-2 border-warning my-5" style={{ width: "23rem" }}>
+            <div className="text-center align-center mx-auto  border border-2 border-warning my-5" style={{ width: "33rem",height:'30rem' }}>
                 <ToastContainer
                     position="top-right"
                     autoClose={1000} />
-                <Container style={{ width: "17rem" }} className="mt-4 mb-4">
+                <Container className="mt-4 mb-4">
                     <Row>
-                        <Col className="todoapp container-fluid">
-                            <h3 className="mb-4">LogIn</h3>
-                            <div className="d-flex container fluid w-100">
+                        <Col>
+                            <h3 className="mb-5 my-5"><h2>Login Form</h2></h3>
+                            <div>
                                 <form onSubmit={handleLogin}>
                                     <Input
-                                        className="mx-auto mt-4"
+                                        className="mx-auto my-4"
                                         type="text"
                                         placeholder="Email"
                                         value={email}
                                         onChange={(event) => setEmail(event.target.value)}
                                     />
                                     <Input
-                                        className="mx-auto mt-4"
+                                        className="mx-auto my-4"
                                         type="text"
                                         placeholder="Password"
                                         value={password}
                                         onChange={(event) => setPassword(event.target.value)}
                                     />
-                                    <Button className="btn btn-2lg btn-warning  mt-4"
+                                    <Button className="btn btn-2lg btn-warning col-md-12  mt-4"
                                     >SignIn</Button>
                                 </form>
                             </div>

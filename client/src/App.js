@@ -27,8 +27,6 @@ function App() {
     {/* <Route path="/todo" element={<Todo />} /> */}
     <Route path="/BackendDataList" element={<BackendDataList />} />
     </Routes>
-
-
     </>
   );
 }

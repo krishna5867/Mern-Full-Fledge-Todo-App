@@ -1,38 +1,16 @@
 const Todo = require("../models/todoModel");
-const User = require("../models/userModel");
-
+const user = require("../models/userModel");
 
 exports.home = (req, res) => {
     res.send("Hello Todo");
-    res.send(User)
-
-}
-
-exports.getTodos = async (req, res)=>{
-    try{
-        const todos = await Todo.find({user:req.user.user_id});
-        // const todos = await Todo.find();
-        return res.status(200).json({
-            success: true,
-            message: "successfully retrieved",
-            todos,
-        })        
-    }
-
-    catch(err){
-        return res.status(401).json({
-            success: false,
-            message: err.message,
-        })
-    }
 }
 
 exports.createTodo = async (req, res) => {
     try {
-        const user = req.user;
-        // return res.send(user)
-        if(!user)
-            throw new Error("user not found");
+        // const user = req.user;
+        // res.send(user)
+        // if(!user)
+        //     throw new Error("user not found");
 
         const { title, tasks } = req.body;
 
@@ -60,6 +38,30 @@ exports.createTodo = async (req, res) => {
         res.status(400).send(error.message);
     }
 };
+
+//pagination
+const PAGE_SIZE = 9;
+exports.getTodos = async (req, res) => {
+    try {
+        const { page = 0 } = req.query;
+
+        const todo = await Todo.find({}, null, {
+            skip: parseInt(page) * PAGE_SIZE,
+            limit: PAGE_SIZE
+        });
+        return res.status(200).json({
+            success: true,
+            message: "successfully retrieved",
+            todo,
+        })
+    }
+    catch (err) {
+        return res.status(401).json({
+            success: false,
+            message: err.message,
+        })
+    }
+}
 
 exports.editTodo = async (req, res) => {
     try {
@@ -95,16 +97,30 @@ exports.deleteTodo = async (req, res) => {
     }
 };
 
-exports.taskCompleted = async (req, res) => {
-    const id = req.params.id;
-    const todoId = id.split("_");
-
-    const todo = req.body.todo;
-
-    const updateTodo = await Todo.findOneAndUpdate({ _id: todoId }, { $set: { "todos.$.taskCompleted": true } });
-    res.status(201).json({
-        success: true,
-        message: "Task completed"
-    })
+exports.isCompleted = async (req, res) => {
+    try {
+        const todoId = req.params.id;
+        const todo = await Todo.findOneAndUpdate(
+            {
+                todoId,
+            },
+            [
+                {
+                    $set: {
+                        isCompleted: {
+                            $eq: [false, "$isCompleted"],
+                        },
+                    },
+                },
+            ],
+        )
+        res.status(200).json({
+            message: "Todo updated",
+            todo,
+        })
+    } catch (error) {
+        console.log(error.message);
+    }
 }
+
 

@@ -93,9 +93,15 @@ exports.login = async (req, res) => {
 
 exports.logout = async (req, res) => {
   try {
-    res.clearCookie('jwt');
-    res.send('logout');
-    console.log("Logout successfull");
+    // res.clearCookie('jwt');
+    res.cookie("token", null, {
+      expires: new Date(Date.now()),
+      httpOnly: true
+  })
+  res.status(200).json({
+    success: true,
+    message: "Logged Out Successfull"
+})
   } catch (error) {
     res.send(error);
     console.log("Logout failed");

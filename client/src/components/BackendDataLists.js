@@ -7,7 +7,7 @@ const BackendDataList = () => {
     const [userData, setUserData] = useState([]);
 
     const fetchUserData = async () => {
-        const res = await axios.get("http://localhost:4000/getusers");
+        const res = await axios.get("/getusers");
         console.log(res);
         if (res.status === 200) {
             setUserData(res.data.users);
@@ -45,7 +45,7 @@ const BackendDataList = () => {
 
     return (
         <>
-                User Details who are registered.
+                User Details those who are already registered.
             {userData && userData.map((user) => (
                 <>
                 <Container>

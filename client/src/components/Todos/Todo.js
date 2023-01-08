@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { Container, Card, CardBody, Input } from "reactstrap";
+import { Container, Card, CardBody, Input, Row } from "reactstrap";
 import TodoList from "./TodoList";
 
 const Todo = () => {
@@ -16,15 +16,11 @@ const Todo = () => {
 
       const res = await axios.post("/createTodo", todo);
       if (res.data.success) {
-        console.log("Title created successfully");
-        // alert("Todo created successfully");
         setTitle("");
         setTasks("");
       }
     } catch (error) {
-      console.log(error);
-      alert("Todo not created");
-
+      console.log(error.message);
     }
   };
 
@@ -34,19 +30,31 @@ const Todo = () => {
 
     if ((title || tasks) === "") {
       alert("Todo Field can't be Empty");
-    } else {
-      console.log((err)=> console.log(err));
     }
   };
 
+
   return (
-    <div className="pt-4">
-      <Container className="m">
-        <Card className="border border-2 border-warning mb-2 my-5">
+    <>
+    <Container fluid>
+    <Row>
+      <div className="col-lg-4 col-md-12 col-sm-12">
+      <Container>
+        <Card className="border border-2 border-warning mt-3 pt-3 pb-5">
           <CardBody>
-            <Container className="mb-4">
+            <Container>
               <form onSubmit={handleSubmit}>
-                <h3 className="mt-3 text-center"><b> Todo App</b></h3>
+                <div className="d-flex justify-content-between mt-4 mb-4">
+                  <div><h3 className=""><b> Todo App</b></h3></div>
+                  <div>
+    <Input
+      type="search"
+      id="search"
+      placeholder="Search Todo"
+      name="Search Todo"
+    />
+                  </div>
+                </div>
                 <CardBody className="mt-2 d-flex">
                   <Input
                     type="text"
@@ -71,7 +79,7 @@ const Todo = () => {
                     }}
                   />
                   <button
-                    className="btn btn-primary btn-lg col-12  mt-4"
+                    className="btn btn-warning btn-lg col-12  mt-4"
                     type="Submit"
                   >
                     Add Todo
@@ -82,8 +90,14 @@ const Todo = () => {
           </CardBody>
         </Card>
       </Container>
-      <TodoList />
-    </div>
+      </div>
+
+        <div  className="col-md-12 col-lg-8 ">
+          <TodoList />
+        </div>
+      </Row>
+    </Container>
+  </>
   );
 };
 

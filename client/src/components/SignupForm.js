@@ -48,20 +48,20 @@ const Signup = () => {
 
     return (
         <>
-            <div className="text-center border border-2 border-warning mx-auto my-5" style={{ width: "23rem" }}>
+            <div className="text-center border border-2 border-warning mx-auto my-5" style={{ width: "33rem", height:'30rem' }}>
                 <ToastContainer
                     position="top-right"
                     autoClose={1000}
                     theme="dark"
                 />
-                <Container style={{ width: "17rem" }} className="mt-4 mb-4">
+                <Container style={{ width: "rem" }} className="mt-4 mb-4">
                     <Row>
-                        <Col className="todoapp container-fluid">
-                            <h3 className="mb-4">Register Form</h3>
-                            <div className="d-flex container fluid w-100">
+                        <Col>
+                            <h3 className="mb-5 my-5"><h2>Registration Form</h2></h3>
+                            <div>
                                 <form onSubmit={handleSubmit}>
                                     <Input
-                                        className="my-3 mx-auto"
+                                        className="my-4 mx-auto"
                                         type="text"
                                         name='name'
                                         placeholder="Enter Name"
@@ -69,7 +69,7 @@ const Signup = () => {
                                         onChange={(event) => setName(event.target.value)}
                                     />
                                     <Input
-                                        className="my-3 mx-auto"
+                                        className="my-4 mx-auto"
                                         type="text"
                                         name='email'
                                         placeholder="Enetr Email"
@@ -77,14 +77,15 @@ const Signup = () => {
                                         onChange={(event) => setEmail(event.target.value)}
                                     />
                                     <Input
-                                        className="my-3 mx-auto"
+                                        className="my-4 mx-auto"
                                         type="text"
                                         name='password'
                                         placeholder="Enter Password"
                                         value={password}
                                         onChange={(event) => setPassword(event.target.value)}
                                     />
-                                    <Button className="btn-warning btn-2lg mt-2">SignUp</Button>
+                                    <Button className="btn-warning btn-2lg mt-4 col-md-12">SignUp</Button>
+                                    
                                 </form>
                             </div>
                         </Col>
