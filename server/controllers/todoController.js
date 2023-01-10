@@ -1,17 +1,12 @@
 const Todo = require("../models/todoModel");
-const user = require("../models/userModel");
+const User = require("../models/userModel");
 
 exports.home = (req, res) => {
     res.send("Hello Todo");
 }
-
+//create todo
 exports.createTodo = async (req, res) => {
     try {
-        // const user = req.user;
-        // res.send(user)
-        // if(!user)
-        //     throw new Error("user not found");
-
         const { title, tasks } = req.body;
 
         if (!title || !tasks) {
@@ -28,27 +23,32 @@ exports.createTodo = async (req, res) => {
             title,
             tasks,
         });
-        return res.status(201).json({
+        res.status(201).json({
             success: true,
             message: "Todo Created Successfully",
             todo,
+            User,
+            userId
         });
     } catch (error) {
-        console.log(error);
+        // console.log(error);
         res.status(400).send(error.message);
     }
 };
 
-//pagination
+//getTodos & pagination
 const PAGE_SIZE = 9;
 exports.getTodos = async (req, res) => {
     try {
+            // const search = req.query;
         const { page = 0 } = req.query;
-
-        const todo = await Todo.find({}, null, {
+        const todo = await Todo.find(
+            // {search},
+            {}, null, {
             skip: parseInt(page) * PAGE_SIZE,
             limit: PAGE_SIZE
-        });
+        }
+        );
         return res.status(200).json({
             success: true,
             message: "successfully retrieved",
@@ -56,9 +56,11 @@ exports.getTodos = async (req, res) => {
         })
     }
     catch (err) {
+        // console.log(err.message);
         return res.status(401).json({
             success: false,
             message: err.message,
+            
         })
     }
 }
@@ -122,5 +124,7 @@ exports.isCompleted = async (req, res) => {
         console.log(error.message);
     }
 }
+
+
 
 

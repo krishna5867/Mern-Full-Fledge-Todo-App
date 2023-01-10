@@ -6,20 +6,18 @@ const {
     createUser,
     login,
     getUsers,
-    editUser,
-    deleteUser,
-    logout,
+    signout,
+    isloggedin
 } = require("../controllers/userControllers");
 
 const router = express.Router();
 
 router.get("/", home);
 router.post("/createUser", createUser);
+router.get("/getUsers",auth, getUsers);
 router.post("/login", login);
-router.get("/getUsers", getUsers);
-router.get("/logout", logout);
-router.put("/edituser/:id", editUser);
-router.delete("/deleteUser/:id", deleteUser);
+router.get("/signout", signout);
+router.get("/isloggedin",auth, isloggedin);
 
 
 module.exports = router;

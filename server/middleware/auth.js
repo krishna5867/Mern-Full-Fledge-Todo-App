@@ -1,25 +1,30 @@
 const jwt = require('jsonwebtoken');
 
-const auth = (req, res, next) => {
-    const token = req.header("auth");
-    // const token = req.cookies.token || req.body.token || 
-    // req.header("Authorization").replace("Bearer", "");
+const auth = async (req, res, next) => {
+    const token = req.cookies.token || req.body.token; 
+    //  || req.header("Authorization").replace("Bearer", "");
 
     if (!token) {
-        return res.status(403).send('token is missing')
+        return res.status(403).send('Token is missing')
     }
     try {
     //verify token
-        const user = jwt.verify(token, process.env.SECRET_KEY)
-        req.id = verifiedToken.id;
-        console.log(user);
+        const decode = jwt.verify(token, process.env.SECRET_KEY)
+        console.log(decode);
         req.user = {
-            user_id: user.id
+            user_id: user._id
         } 
+        res.status(200).json({
+            success: true,
+            message: 'token matched',
+            user,
+            decode
+        })
+        return next()
+
     } catch (error) {
         res.status(403).send('token is invalid')
     }
-    return next();
 }
 
 module.exports = auth;

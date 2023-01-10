@@ -1,5 +1,5 @@
 const express = require("express");
-const isLogged = require('../middleware/isLogged');
+const auth = require('../middleware/auth');
 
 const {
     home,
@@ -8,7 +8,7 @@ const {
     editTodo,
     deleteTodo,
     isCompleted,
-    // searchTodo
+    // search
 } = require("../controllers/todoController");
 
 const router = express.Router();
@@ -19,7 +19,7 @@ router.get("/getTodos", getTodos);
 router.put("/editTodo/:id", editTodo);
 router.delete("/deleteTodo/:id", deleteTodo);
 router.put("/isCompleted/:id", isCompleted);
-// router.get("/searchTodo/:id", searchTodo);
+// router.get("/search", search);
 
 
 

@@ -7,6 +7,7 @@ exports.home = (req, res) => {
   res.send("Hello KRISHNA");
 };
 
+//createuser
 exports.createUser = async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -45,6 +46,23 @@ exports.createUser = async (req, res) => {
   }
 };
 
+//getusers
+exports.getUsers = async (req, res) => {
+  try {
+    const users = await User.find();
+    res.status(200).json({
+      success: true,
+      users,
+    });
+  } catch (error) {
+    res.status(401).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+//login
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body
@@ -74,7 +92,7 @@ exports.login = async (req, res) => {
 
       // Cookie
       const options = {
-        expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
+        expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
         httpOnly: true,
       };
       return res.status(200).cookie("token", token, options).json({
@@ -84,79 +102,44 @@ exports.login = async (req, res) => {
       });
     }
     res.status(400).send("email or password is incorrect");
-
   } catch (error) {
     console.log(error);
     console.log("login error");
   }
 };
 
-exports.logout = async (req, res) => {
+// isloggedin
+exports.isloggedin = async (req,res)=>{
   try {
-    // res.clearCookie('jwt');
-    res.cookie("token", null, {
-      expires: new Date(Date.now()),
-      httpOnly: true
-  })
+      const loggedInUser = await User.findOne({_id:req.userId});
+      res.status(200).json({
+        success: true,
+        loggedInUser
+      });
+  } catch (error) {
+    console.log(error);
+    return res.status(401).json({
+      success: false,
+      message: "plz signin first"
+    }
+      );
+  }
+};
+
+//signout
+exports.signout = async (req, res) => {
+try {
+  res.clearCookie("token");
   res.status(200).json({
     success: true,
-    message: "Logged Out Successfull"
-})
-  } catch (error) {
-    res.send(error);
-    console.log("Logout failed");
-  }
-}
-
-exports.getUsers = async (req, res) => {
-  try {
-    const users = await User.find();
-    res.status(200).json({
-      success: true,
-      users,
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(401).json({
-      success: false,
-      message: error.message,
-    });
-  }
-};
-
-exports.editUser = async (req, res) => {
-  try {
-    const user = await User.findByIdAndUpdate(req.params.id, req.body);
-    res.status(200).json({
-      success: true,
-      message: "User updated Successfully",
-      user,
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(401).json({
-      success: false,
-      message: error.message,
-    });
-  }
-};
+    message: 'Signout Success',
+  })
+} catch (error) {
+  console.log(error.message);
+}};
 
 
-exports.deleteUser = async (req, res) => {
-  try {
-    const userId = req.params.id;
-    const user = await User.findByIdAndDelete(userId);
-    res.status(200).json({
-      success: true,
-      message: "User Deleted Successfully",
-      user,
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(401).json({
-      success: false,
-      message: error.message,
-    });
-  }
-};
+
+
+
 

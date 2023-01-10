@@ -3,16 +3,18 @@ import { useEffect } from "react";
 import axios from "axios";
 
 
-import { Container, Card} from "reactstrap";
+import { Container, Card, Input} from "reactstrap";
 
-const TodoList = ({handleSearch}) => {
+const TodoList = () => {
   const [todo, setTodo] = useState([]);
   const [page, setPage] = useState(0);
   const [completed, setIscompleted] = useState();
+  const [search, setSearch] = useState('');
+
 
   //getTodos
-  const fetchTodosData = async (page) => {
-    const res = await axios.get(`/getTodos?page=${page}`);
+  const fetchTodosData = async (page,search) => {
+    const res = await axios.get(`/getTodos?page=${page}?search=${search}`);
     if (res.status === 200) {
       setTodo(res.data.todo);
     } else {
@@ -22,7 +24,7 @@ const TodoList = ({handleSearch}) => {
 
   useEffect(() => {
     fetchTodosData(page);
-  }, [todo, page]);
+  }, [page]);
 
 
   const handleEdit = async (todo) => {
@@ -51,13 +53,18 @@ const TodoList = ({handleSearch}) => {
     }
   };
 
-  const handleIscompleted = (e) => {
-    setIscompleted(e.target.value)
-    console.log(completed);
+  const handleIscompleted = async (e) => {
+    const res = await axios.put(`/isCompleted/${todo._id}`);
+    if(res.status === 200){
+      setIscompleted(e.target.value)
+      console.log(completed);
+    }
   }
 
   return (
     <>
+      <Input type="text" placeholder='Search Todo' value={search} name={search} onChange={(e)=>setSearch(e.target.value)} />
+
       <Container className="mt-3">
         <Card className="border border-2 border-warning">
           {/* <CardBody> */}

@@ -6,6 +6,7 @@ import { Container, Card, CardBody } from "reactstrap";
 const BackendDataList = () => {
     const [userData, setUserData] = useState([]);
 
+    // geting users
     const fetchUserData = async () => {
         const res = await axios.get("/getusers");
         console.log(res);
@@ -16,46 +17,46 @@ const BackendDataList = () => {
             console.log("Something wrong in getting data");
         }
     }
+
+    const DashboardValid = async () => {
+        let token = localStorage.getItem("token");
+        const res = await fetch("/isloggedin", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": token
+            }
+        });
+        const data = await res.json();
+        if (data.status === 401 || !data) {
+            console.log("user not verify");
+        } else {
+            console.log("user verify");
+            setUserData(data)
+        }
+    }
+
     useEffect(() => {
         fetchUserData();
+        setTimeout(() => {
+            DashboardValid();
+        }, 2000)
     }, [userData])
-
-    // const handleEdit = async (user) => {
-    //     const userName = prompt("Enter new Name");
-    //     const userEmail = prompt("Enter new Email");
-
-    //     if (!userName || !userEmail) {
-    //         alert("Please enter both field");
-    //     } else {
-    //         const res = await axios.put(`http://localhost:4000/edituser/${user._id}`, {
-    //             name: "userName",
-    //             email: "userEmail",
-    //             user
-    //         });
-    //         console.log(res);
-    //             }
-    //     };
-
-    //     const handleDelete = async (userId) => {
-    //         alert("Are your Sure");
-    //         const res = await axios.delete(`http://localhost:4000/deleteUser/${userId}`);
-    //         console.log(res);
-    //     };
 
 
     return (
         <>
-                User Details those who are already registered.
+            User Details those who are already registered.
             {userData && userData.map((user) => (
                 <>
-                <Container>
-                    <Card key={user._id}>
-                        <CardBody>
-                        NAME-<b>{user.name.toUpperCase()}</b> EMAIL-
-                        <b>{user.email}</b>
-                        </CardBody>
-                    </Card>
-                </Container>
+                    <Container>
+                        <Card key={user._id}>
+                            <CardBody>
+                                NAME-<b>{user.name.toUpperCase()}</b> EMAIL-
+                                <b>{user.email}</b> 
+                            </CardBody>
+                        </Card>
+                    </Container>
                     <div >
                     </div>
                 </>
