@@ -34,12 +34,12 @@ exports.createUser = async (req, res) => {
       process.env.SECRET_KEY,
       { expiresIn: '2h' }
     );
-    console.log(`Registered token- ${token}`);
+    // console.log(token);
     user.token = token
     await user.save();
 
     user.password = undefined
-    return res.status(201).json(user)
+    return res.status(200).json(user)
 
   } catch (error) {
     return res.status(400).send("user already registered");
@@ -50,6 +50,7 @@ exports.createUser = async (req, res) => {
 exports.getUsers = async (req, res) => {
   try {
     const users = await User.find();
+    // console.log(users);
     res.status(200).json({
       success: true,
       users,
@@ -67,7 +68,7 @@ exports.login = async (req, res) => {
   try {
     const { email, password } = req.body
     if (!(email && password)) {
-      return res.status(400).send("Incorrect Password")
+      return res.status(400).send("Incorrect Credincial")
     }
 
     const user = await User.findOne({ email });
@@ -88,7 +89,7 @@ exports.login = async (req, res) => {
       user.token = token;
       await user.save();
       user.password = undefined;
-      console.log(`Login token- ${token}`);
+      // console.log(token);
 
       // Cookie
       const options = {
@@ -111,7 +112,7 @@ exports.login = async (req, res) => {
 // isloggedin
 exports.isloggedin = async (req,res)=>{
   try {
-      const loggedInUser = await User.findOne({_id:req.userId});
+      const loggedInUser = await User.findOne({_id: req.user_Id});
       res.status(200).json({
         success: true,
         loggedInUser
@@ -120,7 +121,7 @@ exports.isloggedin = async (req,res)=>{
     console.log(error);
     return res.status(401).json({
       success: false,
-      message: "plz signin first"
+      message: "Login Failed"
     }
       );
   }

@@ -23,12 +23,11 @@ exports.createTodo = async (req, res) => {
             title,
             tasks,
         });
-        res.status(201).json({
+        res.status(200).json({
             success: true,
             message: "Todo Created Successfully",
             todo,
             User,
-            userId
         });
     } catch (error) {
         // console.log(error);
@@ -37,17 +36,15 @@ exports.createTodo = async (req, res) => {
 };
 
 //getTodos & pagination
-const PAGE_SIZE = 9;
+const PAGE_SIZE = 8;
 exports.getTodos = async (req, res) => {
+    
     try {
-            // const search = req.query;
         const { page = 0 } = req.query;
         const todo = await Todo.find(
-            // {search},
             {}, null, {
             skip: parseInt(page) * PAGE_SIZE,
-            limit: PAGE_SIZE
-        }
+            limit: PAGE_SIZE}
         );
         return res.status(200).json({
             success: true,
@@ -60,7 +57,6 @@ exports.getTodos = async (req, res) => {
         return res.status(401).json({
             success: false,
             message: err.message,
-            
         })
     }
 }
@@ -105,7 +101,7 @@ exports.isCompleted = async (req, res) => {
         const todo = await Todo.findOneAndUpdate(
             {
                 todoId,
-            },
+},
             [
                 {
                     $set: {
@@ -125,6 +121,19 @@ exports.isCompleted = async (req, res) => {
     }
 }
 
+exports.searchTodo = async (req, res) => {
+try {
+    const search = req.query.search;
+    const todo = await Todo.find();
+    const filterTodo = todo.filter((item)=>{
+        return item.title.toLowerCase().includes(search.toLowerCase())});
+    res.status(200).json({
+        filterTodo,
+    })
+} catch (error) {
+    console.log(error.message);
+}
+};
 
 
 

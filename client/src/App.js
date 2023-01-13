@@ -16,6 +16,9 @@ function App() {
       <Navbar />
       <Routes>
         <Route exact path="/" element={<Signup />} />
+        {/* <Route exact path="/dashboard" element={<Dashboard />} />
+        <Route exact path="/signup" element={<SignupForm />} />
+        <Route exact path="/BackendDataList" element={<BackendDataList />} /> */}
         <Route path="/dashboard" element={<Protected Component ={Dashboard} />} />
         <Route path="/signup" element={<SignupForm />} />
         <Route path="/login" element={<LoginForm/>} />

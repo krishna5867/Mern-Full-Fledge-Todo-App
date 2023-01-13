@@ -16,7 +16,7 @@ router.get("/", home);
 router.post("/createUser", createUser);
 router.get("/getUsers",auth, getUsers);
 router.post("/login", login);
-router.get("/signout", signout);
+router.get("/signout",auth, signout);
 router.get("/isloggedin",auth, isloggedin);
 
 

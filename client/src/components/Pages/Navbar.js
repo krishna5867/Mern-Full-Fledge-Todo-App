@@ -10,7 +10,7 @@ const Navbar = (props) => {
         const res = await axios.get("/signout");
         try {
             if (res.status === 200) {
-                localStorage.clear()
+                // localStorage.clear()
                 navigate("/");
             }
         } catch (error) {

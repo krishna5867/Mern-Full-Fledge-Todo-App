@@ -19,12 +19,15 @@ const Signup = () => {
                 name,email,password
             });
 
-            if (res.data.success) {
-                // window.confirm("User Registered Success");
-                navigate("/login")
-                toast.success("Registered Successfull", {
-                }, 300);
-                console.log("User created successfully");
+            if (res.status === 200) {
+                setName("");
+                setEmail("");
+                setPassword("");
+                setTimeout(()=>{
+                navigate("/login");
+                },2000)
+                toast.success("Registered Successfull Login to continue");
+                // console.log("User created successfully");
             }else{
                 console.log("Login Failed");
             }
@@ -38,6 +41,7 @@ const Signup = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         submitData(email);
+
 };
 
 

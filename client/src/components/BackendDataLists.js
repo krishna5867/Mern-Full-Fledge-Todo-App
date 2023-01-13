@@ -8,7 +8,9 @@ const BackendDataList = () => {
 
     // geting users
     const fetchUserData = async () => {
-        const res = await axios.get("/getusers");
+        const res = await axios.get("/getUsers", {
+            withCredentials: true
+        });
         console.log(res);
         if (res.status === 200) {
             setUserData(res.data.users);
@@ -18,28 +20,9 @@ const BackendDataList = () => {
         }
     }
 
-    const DashboardValid = async () => {
-        let token = localStorage.getItem("token");
-        const res = await fetch("/isloggedin", {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": token
-            }
-        });
-        const data = await res.json();
-        if (data.status === 401 || !data) {
-            console.log("user not verify");
-        } else {
-            console.log("user verify");
-            setUserData(data)
-        }
-    }
-
     useEffect(() => {
         fetchUserData();
         setTimeout(() => {
-            DashboardValid();
         }, 2000)
     }, [userData])
 

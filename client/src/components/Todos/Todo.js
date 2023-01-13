@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
-import { Container, Card, CardBody, Input, Row } from "reactstrap";
+import { Container, Card, CardBody, Input, Row, Toast } from "reactstrap";
+import { ToastContainer, toast } from "react-toastify";
 import TodoList from "./TodoList";
 import SearchForm from './serach'
 
@@ -17,10 +18,10 @@ const Todo = () => {
       };
 
       const res = await axios.post("/createTodo", todo);
-      if (res.data.success) {
+      if (res.status === 200) {
         setTitle("");
         setTasks("");
-        window.confirm("Todo added")
+        toast.success("Todo added")
       }
     } catch (error) {
       console.log(error.message);
@@ -35,14 +36,14 @@ const Todo = () => {
       alert("Todo Field can't be Empty");
     }
   };
-  useEffect(()=>{
-    submitData();
-  },[])
 
 
   return (
     <>
       <Container fluid>
+      <ToastContainer
+                    position="top-right"
+                    autoClose={1000} />
         <Row>
           <div className="col-lg-4 col-md-12 col-sm-12">
             <Container>
@@ -54,7 +55,7 @@ const Todo = () => {
                         <div><h3 className=""><b> Todo App</b></h3></div>
                         <div>
                           {/* search box */}
-                          <SearchForm />
+                          {/* <SearchForm /> */}
                         </div>
                       </div>
                       <CardBody className="mt-2 d-flex">
