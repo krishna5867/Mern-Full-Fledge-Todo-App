@@ -6,55 +6,60 @@ exports.home = (req, res) => {
 }
 //create todo
 exports.createTodo = async (req, res) => {
-    try {
         const { title, tasks } = req.body;
-
         if (!title || !tasks) {
             throw new Error("Title and Tasks must be Required");
         }
 
+    try {
         const todoExits = await Todo.findOne({ title });
 
         if (todoExits) {
             throw new Error("Title Already Exists");
-        }
+        }else{
         // Creating & Inserting todo into the Database
         const todo = await Todo.create({
             title,
-            tasks
+            tasks,
         });
-
         res.status(200).json({
             success: true,
             message: "Todo Created Successfully",
-            todo,
-            User,
+            todo
         });
-
+        // console.log(todo);
+    }
     } catch (error) {
-        // console.log(error);
         res.status(400).send(error.message);
     }
 };
 
 //getTodos
 exports.getTodos = async (req, res) => {
-    try {
-        const search = req.query.search || "";
 
-        const query = {
-            title: { $regex: search, $options: "i" }
+    const search = req.query.search || "";
+    const page = req.query.page || 1;
+    const sort = req.query.sort || "";
+
+    const limit = 8;
+
+    const query = {
+        title: { $regex: search, $options: "i" }
     };
 
+    try {
+        const skip = (page - 1) * limit;
         const todo = await Todo.find(query)
-        return res.status(200).json({
+            .sort({"createdAt": sort})
+            .limit(limit)
+            .skip(skip)
+        res.status(200).json({
             success: true,
             message: "successfull",
             todo
         })
     }
     catch (err) {
-        // console.log(err.message);
         return res.status(401).json({
             success: false,
             message: err.message,
@@ -102,7 +107,7 @@ exports.isCompleted = async (req, res) => {
         const todo = await Todo.findOneAndUpdate(
             {
                 todoId,
-},
+            },
             [
                 {
                     $set: {

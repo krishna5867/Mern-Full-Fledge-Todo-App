@@ -6,17 +6,20 @@ import { Container, Card, Input, Button, Row } from "reactstrap";
 
 const TodoList = () => {
   const [todo, setTodo] = useState([]);
-  const [page, setPage] = useState(0);
-  const [isCompleted, setIscompleted] = useState(false);
   const [search, setSearch] = useState('');
-  const [sort, setSort] = useState("New");
+  const [isCompleted, setIscompleted] = useState(false);
+  const [sort, setSort] = useState(-1);
+  const [page, setPage] = useState(1);
+  const [pageCount, setPageCount] = useState(0);
 
+  console.log(isCompleted);
   // getTodos
   const fetchTodosData = async () => {
-    const res = await axios.get(`/getTodos?search=${search}`);
-    console.log(res);
+    const res = await axios.get(`/getTodos?sort=${sort}`);
+    // const res = await axios.get(`/getTodos?sort=${sort}?search=${search}?page=${page}`);
     if (res.status === 200) {
       setTodo(res.data.todo);
+      setPageCount(res.data.todo.length)
     } else {
       console.log("something went wrong");
     }
@@ -25,6 +28,20 @@ const TodoList = () => {
   useEffect(() => {
     fetchTodosData();
   }, [todo]);
+
+  const handlePrevios = () => {
+    setPage(() => {
+      if (page === 1) return page;
+      return page - 1
+    })
+  };
+
+  const handleNext = () => {
+    setPage(() => {
+      if (page === pageCount) return page;
+      return page + 1
+    })
+  };
 
   const handleEdit = async (todo) => {
     const todoTitle = prompt("Enter new Title");
@@ -52,16 +69,8 @@ const TodoList = () => {
     }
   };
 
-  const handleIscompleted = async () => {
+  const handleCheckBox = () => {
     setIscompleted(!isCompleted);
-
-  };
-
-  const handleSort = (curr) => {
-    if (sort === "New") {
-      const sorted = todo.sort((a, b) => a[curr]?.title > b[curr]?.title ? 1 : -1);
-      console.log(sorted);
-    }
   };
 
 
@@ -70,19 +79,19 @@ const TodoList = () => {
 
       <Container>
         <Row className="">
-        <div className="col-lg-10 mt-3">
-          <Input type="text" placeholder='Search Todo' value={search} name={search}
-        onChange={(e) => setSearch(e.target.value)} />
-        </div>
-        <div className="mt-3 col-lg-2">
-          <button className="btn btn-primary col-sm-12 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <b>  Sort Todos </b>
-          </button>
-          <ul className="dropdown-menu">
-            <li><a className="dropdown-item" href="#" onClick={() => handleSort("New")}>New</a></li>
-            <li><a className="dropdown-item" href="#" onClick={() => handleSort("Old")}>Old</a></li>
-          </ul>
-        </div>
+          <div className="col-lg-10 mt-3">
+            <Input type="text" placeholder='Search Todo' value={search} name={search}
+              onChange={(e) => setSearch(e.target.value)} />
+          </div>
+          <div className="mt-3 col-lg-2">
+            <button className="btn btn-primary col-sm-12 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <b>  Sort Todos </b>
+            </button>
+            <ul className="dropdown-menu">
+              <li><a className="dropdown-item" href="#" onClick={() => setSort(-1)}>New</a></li>
+              <li><a className="dropdown-item" href="#" onClick={() => setSort(1)}>Old</a></li>
+            </ul>
+          </div>
         </Row>
       </Container>
       <Container className="mt-3">
@@ -113,10 +122,11 @@ const TodoList = () => {
               <>
                 <Container key={todo._id}>
                   <Card className="border border-2 border-warning mt-1">
-                    {/* <CardBody> */}
                     <div className="d-flex justify-content-between px-2 mt-2" key={todo._id}>
+                      {/* //checkbox */}
                       <div>
-                        <input className="form-check-input" type="checkbox" id="flexCheckChecked" onChange={handleIscompleted} />
+                        {/* <input className="form-check-input" type="checkbox" id="flexCheckChecked" onClick={()=>setIscompleted(!isCompleted)} /> */}
+                        <input className="form-check-input" type="checkbox" id="flexCheckChecked" onChange={handleCheckBox} />
                       </div>
                       <div className="mt-2">
                         <h4>{todo.title}</h4>
@@ -124,27 +134,21 @@ const TodoList = () => {
                       <div className="mt-2">
                         <h4>{todo.tasks}</h4>
                       </div>
-                      <div>
-                        {/* <button
-                        className="btn btn-success sm:col-12 mx-1">
-                        {isCompleted}
-                      </button> */}
+                      <div className="d-flex">
                         <button
                           className="btn btn-secondary sm:col-12 mx-1"
                           onClick={() => handleEdit(todo)}
                         >
-                          Edit
+                          Edit <i class="fa-solid fa-pen-to-square"></i>
                         </button>
                         <button
                           className="btn btn-danger sm:col-12"
                           onClick={() => handleDelete(todo._id)}
                         >
-                          Delete
+                          Delete <i class="fa-solid fa-trash"></i>
                         </button>
-
                       </div>
                     </div>
-                    {/* </CardBody> */}
                   </Card>
                 </Container>
               </>
@@ -159,10 +163,10 @@ const TodoList = () => {
         <nav aria-label="..." className="d-flex justify-content-end fixed-bottom mx-5">
           <ul className="pagination">
             <li className="page-item">
-              <btn className="page-link btn" onClick={() => setPage(page - 1)}>Previous</btn>
+              <btn className="page-link btn" onClick={handlePrevios}>Previous</btn>
             </li>
             <li className="page-item">
-              <btn className="page-link btn" onClick={() => setPage(page + 1)}>Next</btn>
+              <btn className="page-link btn" onClick={handleNext}>Next</btn>
             </li>
           </ul>
         </nav>

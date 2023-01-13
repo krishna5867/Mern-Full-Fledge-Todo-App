@@ -3,7 +3,6 @@ import axios from "axios";
 import { Container, Card, CardBody, Input, Row, Toast } from "reactstrap";
 import { ToastContainer, toast } from "react-toastify";
 import TodoList from "./TodoList";
-import SearchForm from './serach'
 
 
 const Todo = () => {
@@ -53,10 +52,6 @@ const Todo = () => {
                     <form onSubmit={handleSubmit}>
                       <div className="d-flex justify-content-between mt-4 mb-4">
                         <div><h3 className=""><b> Todo App</b></h3></div>
-                        <div>
-                          {/* search box */}
-                          {/* <SearchForm /> */}
-                        </div>
                       </div>
                       <CardBody className="mt-2 d-flex">
                         <Input
