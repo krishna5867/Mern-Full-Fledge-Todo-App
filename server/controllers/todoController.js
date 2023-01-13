@@ -21,35 +21,36 @@ exports.createTodo = async (req, res) => {
         // Creating & Inserting todo into the Database
         const todo = await Todo.create({
             title,
-            tasks,
+            tasks
         });
+
         res.status(200).json({
             success: true,
             message: "Todo Created Successfully",
             todo,
             User,
         });
+
     } catch (error) {
         // console.log(error);
         res.status(400).send(error.message);
     }
 };
 
-//getTodos & pagination
-const PAGE_SIZE = 8;
+//getTodos
 exports.getTodos = async (req, res) => {
-    
     try {
-        const { page = 0 } = req.query;
-        const todo = await Todo.find(
-            {}, null, {
-            skip: parseInt(page) * PAGE_SIZE,
-            limit: PAGE_SIZE}
-        );
+        const search = req.query.search || "";
+
+        const query = {
+            title: { $regex: search, $options: "i" }
+    };
+
+        const todo = await Todo.find(query)
         return res.status(200).json({
             success: true,
-            message: "successfully retrieved",
-            todo,
+            message: "successfull",
+            todo
         })
     }
     catch (err) {
@@ -121,19 +122,19 @@ exports.isCompleted = async (req, res) => {
     }
 }
 
-exports.searchTodo = async (req, res) => {
-try {
-    const search = req.query.search;
-    const todo = await Todo.find();
-    const filterTodo = todo.filter((item)=>{
-        return item.title.toLowerCase().includes(search.toLowerCase())});
-    res.status(200).json({
-        filterTodo,
-    })
-} catch (error) {
-    console.log(error.message);
-}
-};
+// exports.searchTodo = async (req, res) => {
+// // try {
+// //     const search = req.query.search;
+// //     const todo = await Todo.find();
+// //     const filterTodo = todo.filter((item)=>{
+// //         return item.title.toLowerCase().includes(search.toLowerCase())});
+// //     res.status(200).json({
+// //         filterTodo,
+// //     })
+// // } catch (error) {
+// //     console.log(error.message);
+// // }
+// };
 
 
 

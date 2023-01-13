@@ -8,8 +8,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { Row, Col, Button, Input, Container } from "reactstrap";
 
 const Login = () => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("k@k.com");
+    const [password, setPassword] = useState("password");
 
     const navigate = useNavigate();
 

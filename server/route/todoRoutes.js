@@ -8,7 +8,6 @@ const {
     editTodo,
     deleteTodo,
     isCompleted,
-    searchTodo
 } = require("../controllers/todoController");
 
 const router = express.Router();
@@ -19,7 +18,6 @@ router.get("/getTodos",auth, getTodos);
 router.put("/editTodo/:id",auth, editTodo);
 router.delete("/deleteTodo/:id",auth, deleteTodo);
 router.put("/isCompleted/:id",auth, isCompleted);
-router.get("/searchTodo", searchTodo);
 
 
 
