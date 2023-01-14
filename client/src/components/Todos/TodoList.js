@@ -12,11 +12,11 @@ const TodoList = () => {
   const [page, setPage] = useState(1);
   const [pageCount, setPageCount] = useState(0);
 
-  console.log(isCompleted);
+  // console.log(isCompleted);
+
   // getTodos
   const fetchTodosData = async () => {
-    const res = await axios.get(`/getTodos?sort=${sort}`);
-    // const res = await axios.get(`/getTodos?sort=${sort}?search=${search}?page=${page}`);
+    const res = await axios.get(`/getTodos?sort=${sort}&search=${search}&page=${page}`);
     if (res.status === 200) {
       setTodo(res.data.todo);
       setPageCount(res.data.todo.length)
@@ -29,19 +29,6 @@ const TodoList = () => {
     fetchTodosData();
   }, [todo]);
 
-  const handlePrevios = () => {
-    setPage(() => {
-      if (page === 1) return page;
-      return page - 1
-    })
-  };
-
-  const handleNext = () => {
-    setPage(() => {
-      if (page === pageCount) return page;
-      return page + 1
-    })
-  };
 
   const handleEdit = async (todo) => {
     const todoTitle = prompt("Enter new Title");
@@ -69,14 +56,32 @@ const TodoList = () => {
     }
   };
 
-  const handleCheckBox = () => {
-    setIscompleted(!isCompleted);
+  const handlePrevios = () => {
+    setPage(() => {
+      if (page === 1) return page;
+      return page - 1
+    })
   };
 
+  const handleNext = () => {
+    setPage(() => {
+      if (page === pageCount) return page;
+      return page + 1
+    })
+  };
+
+  const handleCompleted = async (todoId) => {
+    try {
+        const res = await fetch(`/isCompleted/${todoId}`);
+        if(res.status === 200)
+        console.log(res);
+    } catch (error) {
+        console.error(error);
+    }
+}
 
   return (
     <>
-
       <Container>
         <Row className="">
           <div className="col-lg-10 mt-3">
@@ -126,7 +131,7 @@ const TodoList = () => {
                       {/* //checkbox */}
                       <div>
                         {/* <input className="form-check-input" type="checkbox" id="flexCheckChecked" onClick={()=>setIscompleted(!isCompleted)} /> */}
-                        <input className="form-check-input" type="checkbox" id="flexCheckChecked" onChange={handleCheckBox} />
+                        <input className="form-check-input" type="checkbox" id="flexCheckChecked" onClick={handleCompleted} />
                       </div>
                       <div className="mt-2">
                         <h4>{todo.title}</h4>

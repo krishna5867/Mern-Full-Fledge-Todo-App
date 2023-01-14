@@ -36,17 +36,13 @@ exports.createTodo = async (req, res) => {
 
 //getTodos
 exports.getTodos = async (req, res) => {
-
     const search = req.query.search || "";
     const page = req.query.page || 1;
     const sort = req.query.sort || "";
-
     const limit = 8;
-
     const query = {
         title: { $regex: search, $options: "i" }
     };
-
     try {
         const skip = (page - 1) * limit;
         const todo = await Todo.find(query)
@@ -126,20 +122,6 @@ exports.isCompleted = async (req, res) => {
         console.log(error.message);
     }
 }
-
-// exports.searchTodo = async (req, res) => {
-// // try {
-// //     const search = req.query.search;
-// //     const todo = await Todo.find();
-// //     const filterTodo = todo.filter((item)=>{
-// //         return item.title.toLowerCase().includes(search.toLowerCase())});
-// //     res.status(200).json({
-// //         filterTodo,
-// //     })
-// // } catch (error) {
-// //     console.log(error.message);
-// // }
-// };
 
 
 
