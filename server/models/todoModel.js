@@ -5,8 +5,8 @@ const todoSchema = new mongoose.Schema({
     tasks: String,
     user: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'user',
-        // required: true,
+        ref: 'User',
+        required: true,
     }],
     isCompleted: {
         type: Boolean,

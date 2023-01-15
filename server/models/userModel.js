@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema({
   },
   todo: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'todo',
+    ref: 'Todo',
     required: true,
 }],
   token: {

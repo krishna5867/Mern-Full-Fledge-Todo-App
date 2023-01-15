@@ -130,7 +130,6 @@ const TodoList = () => {
                     <div className="d-flex justify-content-between px-2 mt-2" key={todo._id}>
                       {/* //checkbox */}
                       <div>
-                        {/* <input className="form-check-input" type="checkbox" id="flexCheckChecked" onClick={()=>setIscompleted(!isCompleted)} /> */}
                         <input className="form-check-input" type="checkbox" id="flexCheckChecked" onClick={handleCompleted} />
                       </div>
                       <div className="mt-2">

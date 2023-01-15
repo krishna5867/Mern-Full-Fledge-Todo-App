@@ -6,29 +6,33 @@ exports.home = (req, res) => {
 }
 //create todo
 exports.createTodo = async (req, res) => {
+
+    const user = await User.findOne({ _id: req.user});
+    // console.log(user);
         const { title, tasks } = req.body;
         if (!title || !tasks) {
             throw new Error("Title and Tasks must be Required");
         }
 
-    try {
-        const todoExits = await Todo.findOne({ title });
+        try {
+            const todoExits = await Todo.findOne({ title });
 
-        if (todoExits) {
-            throw new Error("Title Already Exists");
-        }else{
-        // Creating & Inserting todo into the Database
-        const todo = await Todo.create({
-            title,
-            tasks,
-        });
-        res.status(200).json({
-            success: true,
-            message: "Todo Created Successfully",
-            todo
-        });
-        // console.log(todo);
-    }
+            if (todoExits) {
+                throw new Error("Title Already Exists");
+            } else {
+                const todo = await Todo.create({
+                    title,
+                    tasks,
+                    user
+                });
+
+                res.status(200).json({
+                    success: true,
+                    message: "Todo Created Successfully",
+                    todo
+                });
+                
+            }
     } catch (error) {
         res.status(400).send(error.message);
     }
@@ -46,7 +50,7 @@ exports.getTodos = async (req, res) => {
     try {
         const skip = (page - 1) * limit;
         const todo = await Todo.find(query)
-            .sort({"createdAt": sort})
+            .sort({ "createdAt": sort })
             .limit(limit)
             .skip(skip)
         res.status(200).json({
