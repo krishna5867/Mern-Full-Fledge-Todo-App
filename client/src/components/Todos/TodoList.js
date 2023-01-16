@@ -7,7 +7,7 @@ import { Container, Card, Input, Button, Row } from "reactstrap";
 const TodoList = () => {
   const [todo, setTodo] = useState([]);
   const [search, setSearch] = useState('');
-  const [isCompleted, setIscompleted] = useState(false);
+  // const [isCompleted, setIsCompleted] = useState();
   const [sort, setSort] = useState(-1);
   const [page, setPage] = useState(1);
   const [pageCount, setPageCount] = useState(0);
@@ -72,11 +72,11 @@ const TodoList = () => {
 
   const handleCompleted = async (todoId) => {
     try {
-        const res = await fetch(`/isCompleted/${todoId}`);
-        if(res.status === 200)
+        const res = await axios.put(`/isCompleted/${todoId}`);
+        if(res.status === 200);
         console.log(res);
     } catch (error) {
-        console.error(error);
+        console.log("todo not completed ");
     }
 }
 
@@ -130,7 +130,7 @@ const TodoList = () => {
                     <div className="d-flex justify-content-between px-2 mt-2" key={todo._id}>
                       {/* //checkbox */}
                       <div>
-                        <input className="form-check-input" type="checkbox" id="flexCheckChecked" onClick={handleCompleted} />
+                        <input className="form-check-input" type="checkbox" id="flexCheckChecked" onClick={(e)=>handleCompleted(e)} />
                       </div>
                       <div className="mt-2">
                         <h4>{todo.title}</h4>
@@ -138,6 +138,7 @@ const TodoList = () => {
                       <div className="mt-2">
                         <h4>{todo.tasks}</h4>
                       </div>
+                      {/* Edit & Delete */}
                       <div className="d-flex">
                         <button
                           className="btn btn-secondary sm:col-12 mx-1"

@@ -112,7 +112,7 @@ exports.login = async (req, res) => {
 // isloggedin
 exports.isloggedin = async (req,res)=>{
   try {
-      const loggedInUser = await User.findOne({_id: req.user_Id});
+      const loggedInUser = await User.findOne({_id: req.user});
       res.status(200).json({
         success: true,
         loggedInUser

@@ -5,6 +5,17 @@ import { Container, Card, CardBody } from "reactstrap";
 
 const BackendDataList = () => {
     const [userData, setUserData] = useState([]);
+    const [data, setData] = useState();
+
+    const validUser = async () => {
+        const res = await axios.get('/isloggedin');
+        if (res.status === 200) {
+            setData(res.data);
+            console.log("user is authorized");
+        } else {
+            console.log("user is not authorized");
+        }
+    };
 
     // geting users
     const fetchUserData = async () => {
@@ -22,17 +33,23 @@ const BackendDataList = () => {
 
     useEffect(() => {
         fetchUserData();
+        validUser();
         setTimeout(() => {
         }, 2000)
-    }, [userData])
+    }, [userData,data])
 
 
     return (
         <>
-            User Details those who are already registered.
+            {
+                data ? 
+                <>
+                <Container className="mt-3 mb-5 text-center">
+                    <h2>User Details those who are already registered.</h2>
+                </Container>
             {userData && userData.map((user) => (
                 <>
-                    <Container>
+                    <Container className="mt-2 text-center">
                         <Card key={user._id}>
                             <CardBody>
                                 NAME-<b>{user.name.toUpperCase()}</b> EMAIL-
@@ -44,6 +61,13 @@ const BackendDataList = () => {
                     </div>
                 </>
             ))}
+                </>: 
+                <Container fluid className="mt-5 text-center">
+                            <h2> 
+                        Login First To Access This Page ...!
+                            </h2>
+                </Container>
+            }
         </>
     )
 };

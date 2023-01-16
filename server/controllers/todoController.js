@@ -45,11 +45,17 @@ exports.getTodos = async (req, res) => {
     const sort = req.query.sort || "";
     const limit = 8;
     const query = {
-        title: { $regex: search, $options: "i" }
+        $or: [
+            { title: { $regex: search, $options: "i" } },
+            { tasks: { $regex: search, $options: "i" } }
+        ],
     };
     try {
         const skip = (page - 1) * limit;
-        const todo = await Todo.find(query)
+        // user is from User model ref
+        const user = await User.findOne({ _id: req.user});
+        // const todo = await Todo.find(query,{user})
+        const todo = await Todo.find({user})
             .sort({ "createdAt": sort })
             .limit(limit)
             .skip(skip)

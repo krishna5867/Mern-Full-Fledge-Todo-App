@@ -13,6 +13,15 @@ const Login = () => {
 
     const navigate = useNavigate();
 
+    const validUser = async ()=> {
+        const res = await axios.get('/isloggedin');
+        if(res.status === 200){
+            console.log("user is authorized");
+        }else{
+            console.log("user is not authorized");
+        }
+    };
+
     const submitData = async (email) => {
         try {
             const res = await axios.post("/login", {
@@ -21,6 +30,7 @@ const Login = () => {
             if (res.data.success) {
                 localStorage.setItem("token",res.data.token);
                 navigate("/dashboard");
+                validUser();
                 toast.success("login Successfully", {
                 }, 300);
                 setEmail("");
