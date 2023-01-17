@@ -15,11 +15,6 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
   },
-  todo: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Todo',
-    required: true,
-}],
   token: {
     type: String,
   },

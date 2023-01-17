@@ -164,18 +164,21 @@ const TodoList = () => {
           </Container>
         )
       }
-      <div className='border border-danger fixed-bottom'>
-        <nav aria-label="..." className="d-flex justify-content-end fixed-bottom mx-5">
-          <ul className="pagination">
-            <li className="page-item">
-              <btn className="page-link btn" onClick={handlePrevios}>Previous</btn>
-            </li>
-            <li className="page-item">
-              <btn className="page-link btn" onClick={handleNext}>Next</btn>
-            </li>
-          </ul>
-        </nav>
-      </div>
+      {todo.length > 0 ? 
+      <div className='mt-5'>
+      <nav aria-label="..." className="d-flex justify-content-end mx-5">
+        <ul className="pagination mt-5">
+          <li className="page-item">
+            <btn className="page-link btn" onClick={handlePrevios}>Previous</btn>
+          </li>
+          <li className="page-item">
+            <btn className="mt- page-link btn" onClick={handleNext}>Next</btn>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    : 
+    ""}
     </>
   );
 };

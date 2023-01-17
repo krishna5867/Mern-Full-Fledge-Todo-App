@@ -6,10 +6,8 @@ import LoginForm from './components/LoginForm';
 import Navbar from "./components/Pages/Navbar";
 import { Routes, Route } from "react-router-dom";
 import BackendDataList from "./components/BackendDataLists";
-// import Protected from "./protected"
 
 function App() {
-
   return (
     <>
       <Navbar />
@@ -19,10 +17,6 @@ function App() {
         <Route exact path="/signup" element={ <SignupForm />} />
         <Route exact path="/BackendDataList" element={ <BackendDataList />} />
         <Route path="/login" element={<LoginForm/>} />
-
-        {/* <Route path="/dashboard" element={<Protected Component ={Dashboard} />} /> */}
-        {/* <Route path="/signup" element={<SignupForm />} /> */}
-        {/* <Route path="/BackendDataList" element={<Protected Component ={BackendDataList} />} /> */}
       </Routes>
     </>
   );

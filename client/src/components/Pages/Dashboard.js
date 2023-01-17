@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import Todo from '../Todos/Todo';
-import Signup from '../SignupForm';
+import Login from '../LoginForm';
 
 
 const Dashboard = () => {
     const [data, setData] = useState();
+
     const validUser = async () => {
         const res = await axios.get('/isloggedin');
         if (res.status === 200) {
@@ -19,13 +20,11 @@ const Dashboard = () => {
     useEffect(() => {
         validUser()
     }, [data])
+
     return (
         <div>
             {
-                data ?
-                    <Todo />
-                    :
-                    <Signup />
+                data ? <Todo /> : <Login />
             }
         </div>
     )
