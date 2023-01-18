@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useEffect } from "react";
 import { Container, Card, CardBody } from "reactstrap";
 
-const BackendDataList = () => {
+const Users = () => {
     const [userData, setUserData] = useState([]);
     const [data, setData] = useState();
 
@@ -72,5 +72,5 @@ const BackendDataList = () => {
     )
 };
 
-export default BackendDataList;
+export default Users;
 

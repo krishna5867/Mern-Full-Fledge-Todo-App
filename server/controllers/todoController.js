@@ -7,32 +7,32 @@ exports.home = (req, res) => {
 //create todo
 exports.createTodo = async (req, res) => {
 
-    const user = await User.findOne({ _id: req.user});
+    const user = await User.findOne({ _id: req.user });
     // console.log(user);
-        const { title, tasks } = req.body;
-        if (!title || !tasks) {
-            throw new Error("Title and Tasks must be Required");
+    const { title, tasks } = req.body;
+    if (!title || !tasks) {
+        throw new Error("Title and Tasks must be Required");
+    }
+
+    try {
+        const todoExits = await Todo.findOne({ title });
+
+        if (todoExits) {
+            throw new Error("Title Already Exists");
+        } else {
+            const todo = await Todo.create({
+                title,
+                tasks,
+                user
+            });
+
+            res.status(200).json({
+                success: true,
+                message: "Todo Created Successfully",
+                todo
+            });
+
         }
-
-        try {
-            const todoExits = await Todo.findOne({ title });
-
-            if (todoExits) {
-                throw new Error("Title Already Exists");
-            } else {
-                const todo = await Todo.create({
-                    title,
-                    tasks,
-                    user
-                });
-
-                res.status(200).json({
-                    success: true,
-                    message: "Todo Created Successfully",
-                    todo
-                });
-                
-            }
     } catch (error) {
         res.status(400).send(error.message);
     }
@@ -43,7 +43,7 @@ exports.getTodos = async (req, res) => {
     const search = req.query.search || "";
     const page = req.query.page || 1;
     const sort = req.query.sort || "";
-    const limit = 8;
+    const limit = 6;
     const query = {
         $or: [
             { title: { $regex: search, $options: "i" } },
@@ -53,9 +53,9 @@ exports.getTodos = async (req, res) => {
     try {
         const skip = (page - 1) * limit;
         // user is from User model ref
-        const user = await User.findOne({ _id: req.user});
-        // const todo = await Todo.find(query,{user})
-        const todo = await Todo.find({user})
+        const user = await User.findOne({ _id: req.user });
+        const todo = await Todo.find(query)
+            // const todo = await Todo.find({user})
             .sort({ "createdAt": sort })
             .limit(limit)
             .skip(skip)
@@ -107,31 +107,42 @@ exports.deleteTodo = async (req, res) => {
     }
 };
 
+
+// exports.isCompleted = async (req, res) => {
+//     try {
+//         const todoId = req.params.id;
+//         const todo = await Todo.findOneAndUpdate(todoId,
+//             [
+//                 {
+//                     $set: {
+//                         isCompleted: {
+//                             $eq: [false, "$isCompleted"],
+//                         },
+//                     },
+//                 },
+//             ],
+//         )
+//         res.status(200).json({
+//             message: "Todo updated",
+//             todo,
+//         })
+//     } catch (error) {
+//         console.log(error.message);
+//     }
+// }
+
 exports.isCompleted = async (req, res) => {
     try {
-        const todoId = req.params.id;
-        const todo = await Todo.findOneAndUpdate(
-            {
-                todoId,
-            },
-            [
-                {
-                    $set: {
-                        isCompleted: {
-                            $eq: [false, "$isCompleted"],
-                        },
-                    },
-                },
-            ],
-        )
+        const todoId =  req.params.id;
+        const todo = await Todo.findByIdAndUpdate(todoId, {
+            isCompleted: true
+        }, { new: true });
         res.status(200).json({
-            message: "Todo updated",
-            todo,
-        })
-    } catch (error) {
-        console.log(error.message);
+            todo
+        });
+    } catch (err) {
+        res.status(400).json({ message: err.message });
     }
-}
-
+};
 
 

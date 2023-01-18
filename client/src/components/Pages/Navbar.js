@@ -46,7 +46,7 @@ const Navbar = () => {
                     <div className="collapse navbar-collapse mt-1" id="navbarSupportedContent">
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                             <li className="nav-item">
-                                <Link className="nav-link" to="/backenddatalist"><h4>Users</h4></Link>
+                                <Link className="nav-link" to="/users"><h4>Users</h4></Link>
                             </li>
                         </ul>
                         <div className="d-flex justify-content-between">

@@ -29,8 +29,7 @@ exports.createUser = async (req, res) => {
     });
 
     // Token
-    const token = jwt.sign(
-      { user_id: user._id, email },
+    const token = jwt.sign({ user_id: user._id, email },
       process.env.SECRET_KEY,
       { expiresIn: '2h' }
     );
@@ -50,10 +49,9 @@ exports.createUser = async (req, res) => {
 exports.getUsers = async (req, res) => {
   try {
     const users = await User.find();
-    // console.log(users);
     res.status(200).json({
       success: true,
-      users,
+      users
     });
   } catch (error) {
     res.status(401).json({
@@ -79,8 +77,7 @@ exports.login = async (req, res) => {
 
     //Match password
     if (user && (await bcrypt.compare(password, user.password))) {
-      const token = jwt.sign(
-        { user_id: user._id, email },
+      const token = jwt.sign({ user_id: user._id, email },
         process.env.SECRET_KEY,
         {
           expiresIn: '2h'

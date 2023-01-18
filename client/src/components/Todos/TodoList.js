@@ -2,24 +2,23 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 
-import { Container, Card, Input, Button, Row } from "reactstrap";
+import { Container, Card, Input, Row } from "reactstrap";
 
 const TodoList = () => {
+
   const [todo, setTodo] = useState([]);
   const [search, setSearch] = useState('');
-  // const [isCompleted, setIsCompleted] = useState();
   const [sort, setSort] = useState(-1);
   const [page, setPage] = useState(1);
-  const [pageCount, setPageCount] = useState(0);
-
-  // console.log(isCompleted);
+  const [isCompleted, setIsCompleted] = useState(false);
+  
+  console.log(isCompleted);
 
   // getTodos
   const fetchTodosData = async () => {
     const res = await axios.get(`/getTodos?sort=${sort}&search=${search}&page=${page}`);
     if (res.status === 200) {
       setTodo(res.data.todo);
-      setPageCount(res.data.todo.length)
     } else {
       console.log("something went wrong");
     }
@@ -29,6 +28,20 @@ const TodoList = () => {
     fetchTodosData();
   }, [todo]);
 
+  const handleCheckbox = async (todoId) => {
+    try {
+      const res = await axios.patch(`/isCompleted/${todoId}`,{
+        isCompleted: !isCompleted
+      });
+      if(res.status === 200){
+        setIsCompleted(!isCompleted);
+      }else{
+        console.log("Error Occured")
+      }
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
 
   const handleEdit = async (todo) => {
     const todoTitle = prompt("Enter new Title");
@@ -65,25 +78,18 @@ const TodoList = () => {
 
   const handleNext = () => {
     setPage(() => {
-      if (page === pageCount) return page;
+      if (page === page + 1) return page;
       return page + 1
     })
   };
 
-  const handleCompleted = async (todoId) => {
-    try {
-        const res = await axios.put(`/isCompleted/${todoId}`);
-        if(res.status === 200);
-        console.log(res);
-    } catch (error) {
-        console.log("todo not completed ");
-    }
-}
+
+
 
   return (
     <>
       <Container>
-        <Row className="">
+        <Row>
           <div className="col-lg-10 mt-3">
             <Input type="text" placeholder='Search Todo' value={search} name={search}
               onChange={(e) => setSearch(e.target.value)} />
@@ -130,7 +136,7 @@ const TodoList = () => {
                     <div className="d-flex justify-content-between px-2 mt-2" key={todo._id}>
                       {/* //checkbox */}
                       <div>
-                        <input className="form-check-input" type="checkbox" id="flexCheckChecked" onClick={(e)=>handleCompleted(e)} />
+                        <input className="form-check-input" type="checkbox" checked={isCompleted} onChange={handleCheckbox} />
                       </div>
                       <div className="mt-2">
                         <h4>{todo.title}</h4>
@@ -167,7 +173,7 @@ const TodoList = () => {
       {todo.length > 0 ? 
       <div className='mt-5'>
       <nav aria-label="..." className="d-flex justify-content-end mx-5">
-        <ul className="pagination mt-5">
+        <ul className="pagination">
           <li className="page-item">
             <btn className="page-link btn" onClick={handlePrevios}>Previous</btn>
           </li>

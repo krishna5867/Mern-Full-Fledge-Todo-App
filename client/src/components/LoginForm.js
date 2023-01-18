@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Row, Col, Button, Input, Container } from "reactstrap";
@@ -13,6 +12,15 @@ const Login = () => {
 
     const navigate = useNavigate();
 
+    const validUser = async () => {
+        const res = await axios.get('/isloggedin');
+        if (res.status === 200) {
+            // console.log("user is authorized");
+        } else {
+            // console.log("user is not authorized");
+        }
+    };
+
     const submitData = async (email) => {
         try {
             const res = await axios.post("/login", {
@@ -20,6 +28,7 @@ const Login = () => {
             });
             if (res.data.success) {
                 navigate("/");
+                validUser();
                 toast.success("login Successfully", {
                 }, 300);
                 setEmail("");

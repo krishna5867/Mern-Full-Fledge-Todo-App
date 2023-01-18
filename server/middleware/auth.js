@@ -9,7 +9,6 @@ const auth = async (req, res, next) => {
     //verify token
         const decode = jwt.verify(token, process.env.SECRET_KEY)
         req.user = decode.user_id;
-        // console.log(req.user);
         return next()
     } catch (error) {
         res.status(403).send(error.message)

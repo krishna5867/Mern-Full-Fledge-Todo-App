@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState} from 'react'
 import axios from 'axios';
 import Todo from '../Todos/Todo';
 import Login from '../LoginForm';
+
 
 
 const Dashboard = () => {
@@ -11,9 +12,9 @@ const Dashboard = () => {
         const res = await axios.get('/isloggedin');
         if (res.status === 200) {
             setData(res.data);
-            console.log("user is authorized");
+            // console.log("user is authorized");
         } else {
-            console.log("user is not authorized");
+            // console.log("user is not authorized");
         }
     };
 
