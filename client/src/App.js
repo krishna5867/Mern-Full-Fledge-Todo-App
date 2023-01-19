@@ -6,21 +6,9 @@ import LoginForm from './components/LoginForm';
 import Navbar from "./components/Pages/Navbar";
 import { Routes, Route } from "react-router-dom";
 import BackendDataList from "./components/BackendDataLists";
-import axios from "axios";
 
 function App() {
-  const validUser = async () => {
-    const res = await axios.get('/isloggedin');
-    if (res.status === 200) {
-        // console.log("user is authorized");
-    } else {
-        // console.log("user is not authorized");
-    }
-};
 
-useEffect(()=>{
-  validUser()
-})
   return (
     <>
       <Navbar />
