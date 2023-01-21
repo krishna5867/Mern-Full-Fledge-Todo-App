@@ -170,7 +170,7 @@ const TodoList = () => {
           </Container>
         )
       }
-      {todo.length > 0 ? 
+      {todo && todo.length > 0 ? 
       <div className='mt-5'>
       <nav aria-label="..." className="d-flex justify-content-end mx-5">
         <ul className="pagination">
