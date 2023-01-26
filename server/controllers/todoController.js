@@ -52,7 +52,6 @@ exports.getTodos = async (req, res) => {
     };
     try {
         const skip = (page - 1) * limit;
-        // user is from User model ref
         const user = await User.findOne({ _id: req.user });
         const todo = await Todo.find(query)
             // const todo = await Todo.find({user})

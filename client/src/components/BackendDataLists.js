@@ -45,15 +45,17 @@ const Users = () => {
                 data ? 
                 <>
                 <Container className="mt-3 mb-5 text-center">
-                    <h2>User Details those who are already registered.</h2>
+                    <h4>User Details those who are already registered.</h4>
                 </Container>
             {userData && userData.map((user) => (
                 <>
                     <Container className="mt-2 text-center">
-                        <Card key={user._id}>
+                        <Card key={user._id} className='w-50 mx-auto'>
                             <CardBody>
-                                NAME-<b>{user.name.toUpperCase()}</b> EMAIL-
-                                <b>{user.email}</b> 
+                            <b>{user.name.toUpperCase()}</b>
+                                <span className="mx-3">
+                                {user.email}
+                                </span>
                             </CardBody>
                         </Card>
                     </Container>

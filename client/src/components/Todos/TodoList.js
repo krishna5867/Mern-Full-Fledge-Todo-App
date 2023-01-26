@@ -95,7 +95,7 @@ const TodoList = () => {
               onChange={(e) => setSearch(e.target.value)} />
           </div>
           <div className="mt-3 col-lg-2">
-            <button className="btn btn-primary col-sm-12 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <button className="btn btn-primary col-sm-12 col-12 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
               <b>  Sort Todos </b>
             </button>
             <ul className="dropdown-menu">
@@ -106,20 +106,20 @@ const TodoList = () => {
         </Row>
       </Container>
       <Container className="mt-3">
-        <Card className="border border-2 border-warning">
+        <Card className="border border-1 border-warning">
           {/* <CardBody> */}
-          <div className="d-flex justify-content-between px-2 mb-4 mt-2">
+          <div className="d-flex justify-content-between px-2 mt-1">
             <div>
-              <h3>Status</h3>
+              <h4>Status</h4>
             </div>
             <div>
-              <h3>Title</h3>
+              <h4>Title</h4>
             </div>
             <div>
-              <h3>Task</h3>
+              <h4>Task</h4>
             </div>
             <div>
-              <h3>Action</h3>
+              <h4>Action</h4>
             </div>
           </div>
           {/* </CardBody> */}
@@ -132,28 +132,28 @@ const TodoList = () => {
             .map((todo) => (
               <>
                 <Container key={todo._id}>
-                  <Card className="border border-2 border-warning mt-1">
+                  <Card className="mt-1">
                     <div className="d-flex justify-content-between px-2 mt-2" key={todo._id}>
                       {/* //checkbox */}
                       <div>
                         <input className="form-check-input" type="checkbox" checked={isCompleted} onChange={handleCheckbox} />
                       </div>
-                      <div className="mt-2">
-                        <h4>{todo.title}</h4>
+                      <div>
+                        <h5>{todo.title}</h5>
                       </div>
-                      <div className="mt-2">
-                        <h4>{todo.tasks}</h4>
+                      <div className="mt-">
+                        <h5>{todo.tasks}</h5>
                       </div>
                       {/* Edit & Delete */}
-                      <div className="d-flex">
+                      <div className="d-flex mb-2">
                         <button
-                          className="btn btn-secondary sm:col-12 mx-1"
+                          className="btn btn-sm btn-secondary sm:col-12 mx-1"
                           onClick={() => handleEdit(todo)}
                         >
                           Edit <i class="fa-solid fa-pen-to-square"></i>
                         </button>
                         <button
-                          className="btn btn-danger sm:col-12"
+                          className="btn btn-sm btn-danger sm:col-12"
                           onClick={() => handleDelete(todo._id)}
                         >
                           Delete <i class="fa-solid fa-trash"></i>
@@ -170,9 +170,8 @@ const TodoList = () => {
           </Container>
         )
       }
-      {todo && todo.length > 0 ? 
-      <div className='mt-5'>
-      <nav aria-label="..." className="d-flex justify-content-end mx-5">
+      <div className='fixed-bottom'>
+      <nav aria-label="..." className="d-flex justify-content-end mx-3">
         <ul className="pagination">
           <li className="page-item">
             <btn className="page-link btn" onClick={handlePrevios}>Previous</btn>
@@ -183,8 +182,6 @@ const TodoList = () => {
         </ul>
       </nav>
     </div>
-    : 
-    ""}
     </>
   );
 };

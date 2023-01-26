@@ -49,20 +49,19 @@ const Signup = () => {
 
     return (
         <>
-            <div className="text-center border border-2 border-warning mx-auto my-5" style={{ width: "28rem", height:'28rem' }}>
+            <div className="text-center rounded border border-2 border-warning mx-auto my-5" style={{ width: "20rem", height:'22rem' }}>
                 <ToastContainer
                     position="top-right"
                     autoClose={1000}
                     theme="dark"
                 />
-                <Container className="mb-4" style={{ width: "25rem"}}>
+                <Container>
                     <Row>
                         <Col>
-                            <h3 className="mb-5 my-4"><h2>Registration Form</h2></h3>
+                            <h3 className="my-4"><h4>Registration Form</h4></h3>
                             <div>
                                 <form onSubmit={handleSubmit}>
                                     <Input
-                                        className="my-4 mx-auto"
                                         type="text"
                                         name='name'
                                         placeholder="Enter Name"
@@ -70,7 +69,7 @@ const Signup = () => {
                                         onChange={(event) => setName(event.target.value)}
                                     />
                                     <Input
-                                        className="my-4 mx-auto"
+                                        className="my-3"
                                         type="text"
                                         name='email'
                                         placeholder="Enetr Email"
@@ -78,14 +77,14 @@ const Signup = () => {
                                         onChange={(event) => setEmail(event.target.value)}
                                     />
                                     <Input
-                                        className="my-4 mx-auto"
+                                        className="my-3"
                                         type="text"
                                         name='password'
                                         placeholder="Enter Password"
                                         value={password}
                                         onChange={(event) => setPassword(event.target.value)}
                                     />
-                                    <Button className="btn-warning btn-2lg mt-4 col-md-12 mb-4">SignUp</Button>
+                                    <Button className="btn-warning btn-sm mt-3 col-12 mb-4">SignUp</Button>
                                     <p>Already have Account <b><Link to="/login">SignIn</Link></b></p>
                                     
                                 </form>

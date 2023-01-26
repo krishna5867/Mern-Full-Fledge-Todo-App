@@ -46,26 +46,27 @@ const Todo = () => {
         <Row>
           <div className="col-lg-4 col-md-12 col-sm-12">
             <Container>
-              <Card className="border border-2 border-warning mt-3 pt-3 pb-5">
+              <Card className="border border-2 border-warning mt-3 pb-3">
                 <CardBody>
                   <Container>
                     <form onSubmit={handleSubmit}>
-                      <div className="d-flex justify-content-between mt-4 mb-4">
+                      <div className="d-flex justify-content-between mb-3">
                         <div><h3 className=""><b> Todo App</b></h3></div>
                       </div>
-                      <CardBody className="mt-2 d-flex">
+                      {/* <CardBody className="mt-2 d-flex"> */}
                         <Input
                           type="text"
                           id="title"
                           name="title"
                           value={title}
+                          className="mb-3"
                           placeholder="Todo Title"
                           onChange={(e) => {
                             setTitle(e.target.value);
                           }}
                         />
-                      </CardBody>
-                      <CardBody>
+                      {/* </CardBody> */}
+                      {/* <CardBody> */}
                         <Input
                           type="text"
                           id="task"
@@ -77,12 +78,12 @@ const Todo = () => {
                           }}
                         />
                         <button
-                          className="btn btn-warning btn-lg col-12  mt-4"
+                          className="btn btn-warning col-12  mt-3"
                           type="Submit"
                         >
                           Add Todo
                         </button>
-                      </CardBody>
+                      {/* </CardBody> */}
                     </form>
                   </Container>
                 </CardBody>
